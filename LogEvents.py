@@ -89,8 +89,8 @@ def on_message(ws, message):
             print (control + " : " + tostring(event))
         else :
           print (control + " : " + tostring(event))
-    else :
-      print (control + " : " + tostring(event))
+      else :
+        print (control + " : " + tostring(event))
   except Exception as e :
     print ("Unknown event type:" + tostring(event))
     print (e)
