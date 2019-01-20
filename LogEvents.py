@@ -54,7 +54,7 @@ def on_message(ws, message):
       else:
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
-   elif control not in EventDispositions.ignoredEventTypes :
+    elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
         if "Duplicate" not in nodename:
