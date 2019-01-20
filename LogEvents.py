@@ -1,13 +1,14 @@
-import ISY
-import ISY.IsyEventData
-import websocket
-from xml.etree.ElementTree import XML, fromstring, tostring
 try:
   import thread
 except ImportError:
   import _thread as thread
 import time
 import json
+from xml.etree.ElementTree import XML, fromstring, tostring
+import websocket
+sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
+import ISY
+import ISY.IsyEventData
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
