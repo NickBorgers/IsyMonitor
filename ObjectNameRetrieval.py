@@ -13,3 +13,10 @@ def get_node_name(event, myisy):
 def get_detailed_control(event):
   eventControlText = event.find("eventInfo").text[14:23].strip()
   return ISY.IsyEventData.EVENT_CTRL[eventControlText]
+  
+def get_variable_name(event, myisy):
+  variableType = event.find("eventInfo").find("var").get("type")
+  variableId = event.find("eventInfo").find("var").get("id")
+  
+  variableAddress = variableType + ":" + variableId
+  return myisy.var_addrs()[variableAddress]["name"]
