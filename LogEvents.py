@@ -12,6 +12,7 @@ import ISY
 import ISY.IsyEventData
 import EventDispositions
 import ProgramStatusAnalysis
+import ObjectNameRetrieval
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
@@ -46,9 +47,7 @@ def on_message(ws, message):
       if conditionStatus is 'false' and programStatus is 'IDLE':
         pass
       else:
-        programId = event.find("eventInfo").find("id").text
-        paddedProgramId = programId.rjust(4, '0')
-        programName = myisy.get_prog(paddedProgramId).name
+        programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     elif control not in EventDispositions.ignoredEventTypes :
       if control in EventDispositions.triggerTypeEvents :
