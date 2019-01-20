@@ -1,9 +1,9 @@
 
 
-def extract_conditionIndicator(statusIndicator)
+def extract_conditionIndicator(statusIndicator):
   return int(statusIndicator[0])
   
-def extract_executionIndicator(statusIndicator)
+def extract_executionIndicator(statusIndicator):
   return int(statusIndicator[1])
 
 def condition_status(statusIndicator):
