@@ -51,14 +51,10 @@ def on_message(ws, message):
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     elif control not in EventDispositions.ignoredEventTypes :
       if control in EventDispositions.triggerTypeEvents :
-        if nodeaddress is None:
-          nodeaddress = event.find("eventInfo").text[1:13].strip()
-        nodename = myisy._node_get_name(nodeaddress)[1]
+        nodename = ObjectNameRetrieval.get_node_name(event, myisy)
         if "Duplicate" not in nodename:
           try :
-            eventControlText = event.find("eventInfo").text[14:23].strip()
-            eventControl = ISY.IsyEventData.EVENT_CTRL[eventControlText]
-            control = eventControl
+            control = get_detailed_control(event)
           except:
             pass
           if control not in EventDispositions.ignoredEventTypes :
