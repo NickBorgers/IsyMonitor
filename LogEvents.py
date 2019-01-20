@@ -11,7 +11,7 @@ sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
 import ISY
 import ISY.IsyEventData
 import EventDispositions
-import ProgramStatus
+import ProgramStatusAnalysis
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
@@ -43,7 +43,7 @@ def on_message(ws, message):
       conditionIndicator = int(statusIndicator[0])
       executionIndicator = int(statusIndicator[1])
 
-      conditionStatus = ProgramStatus.condition_status(conditionIndicator)
+      conditionStatus = ProgramStatusAnalysis.condition_status(conditionIndicator)
 
       if executionIndicator is 1:
         programStatus = 'IDLE'
