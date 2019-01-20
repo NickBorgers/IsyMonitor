@@ -6,6 +6,7 @@ import time
 import json
 from xml.etree.ElementTree import XML, fromstring, tostring
 import websocket
+import sys
 sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
 import ISY
 import ISY.IsyEventData
