@@ -40,17 +40,8 @@ def on_message(ws, message):
     if event.find("eventInfo").find("id") is not None:
       statusIndicator = event.find("eventInfo").find("s").text
 
-      conditionIndicator = int(statusIndicator[0])
-      executionIndicator = int(statusIndicator[1])
-
-      conditionStatus = ProgramStatusAnalysis.condition_status(conditionIndicator)
-
-      if executionIndicator is 1:
-        programStatus = 'IDLE'
-      elif executionIndicator is 2:
-        programStatus = 'running THEN'
-      elif executionIndicator is 3:
-        programStatus = 'running ELSE'
+      conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
+      programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
 
       if conditionIndicator is 3 and executionIndicator is 1:
         pass
