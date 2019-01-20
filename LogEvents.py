@@ -43,7 +43,7 @@ def on_message(ws, message):
       conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
       programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
 
-      if conditionIndicator is 3 and executionIndicator is 1:
+      if conditionStatus is 'false' and programStatus is 'IDLE':
         pass
       else:
         programId = event.find("eventInfo").find("id").text
