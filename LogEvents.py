@@ -40,8 +40,6 @@ def on_message(ws, message):
 
     if control is "Heartbeat" :
       print ("ISY is Alive")
-    elif control_action == "Var Stat" :
-      print ("Variable status: " + event.find("eventInfo").text)
     elif event.find("eventInfo").find("id") is not None :
       # This is a program execution
       statusIndicator = event.find("eventInfo").find("s").text
@@ -54,6 +52,8 @@ def on_message(ws, message):
       else:
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
+    elif control_action == "Var Stat" :
+      print ("Variable status: " + event.find("eventInfo").text)
     elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
