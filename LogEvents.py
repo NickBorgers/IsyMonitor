@@ -13,6 +13,7 @@ import ISY.IsyEventData
 import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
+import EventHandlers
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
@@ -42,60 +43,38 @@ def on_message(ws, message):
       print ("ISY is Alive")
     elif event.find("eventInfo").find("id") is not None :
       # This is a program execution
-      statusIndicator = event.find("eventInfo").find("s").text
-
-      conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
-      programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
-
-      if conditionStatus is 'false' and programStatus is 'IDLE':
-        pass
-      else:
-        programName = ObjectNameRetrieval.get_program_name(event, myisy)
-        print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
+      EventHandlers.handleProgramEvent(event, myisy)
     elif event.find("eventInfo").find("var") is not None :
-      variableName = ObjectNameRetrieval.get_variable_name(event, myisy)
-      
-      variableNewValue = event.find("eventInfo").find("var").find("val").text
-    
-      print ("Variable (" + variableName + ") is now: " + variableNewValue)
+      # This is a variable state change
+      EventHandlers.handleVariableChange(event, myisy)
     elif control not in EventDispositions.ignoredEventTypes :
+      # Some other type of event has occured
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
-      if control in EventDispositions.triggerTypeEvents :
-        if "Duplicate" not in nodename:
-          try :
-            control = get_detailed_control(event)
-          except:
-            pass
-          if control not in EventDispositions.ignoredEventTypes :
-            if control_action is not None:
-              if control_action != 'Info String' :
-                print (control + " by: " + nodename + " : " + control_action)
-            else:
-              print (control + " by: " + nodename)
-      elif control in EventDispositions.statusTypeEvents :
-        if nodeaddress is not None :
-          if "Duplicate" not in nodename:
-            statusDetail = event.find("fmtAct").text
-            print ("Status (" + control + ") of: " + nodename + " is: " + statusDetail)
-        else :
-          print ("Got statusTypeEvent but no nodeaddress")
-      elif nodeaddress is not None :
-        # Known node status
-        if nodename is not "Duplicate":
-          print (control + " : " + nodeaddress + ": " + nodename)
-          print (message)
-          print ("")
-      elif event.find("eventInfo") is not None :
-        if event.find("eventInfo").find("value") is None :
-          try :
-            print (control + " : " + eventInfo + ": " + nodename)
+      if "Duplicate" not in nodename:
+        # Some devices have extraneous nodes defined, but this event is not for a node marked as a duplicate
+        if control in EventDispositions.triggerTypeEvents :
+          # This is categorized as a trigger event
+          EventHandlers.handleTriggerEvent(event)
+        elif control in EventDispositions.statusTypeEvents :
+          # This is categorized as a status event
+          EventHandlers.handleStatusEvent(event)
+        elif nodename is not None :
+          # This is some other event for a known node
+          if nodename is not "Duplicate":
+            print (control + " : " + nodeaddress + ": " + nodename)
+            print (message)
             print ("")
-          except:
+        elif event.find("eventInfo") is not None :
+          if event.find("eventInfo").find("value") is None :
+            try :
+              print (control + " : " + eventInfo + ": " + nodename)
+              print ("")
+            except:
+              print (control + " : " + tostring(event))
+          else :
             print (control + " : " + tostring(event))
         else :
           print (control + " : " + tostring(event))
-      else :
-        print (control + " : " + tostring(event))
   except Exception as e :
     print ("Unknown event type:" + tostring(event))
     print (e)
