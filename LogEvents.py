@@ -32,7 +32,7 @@ def on_message(ws, message):
     control = ISY.IsyEventData.EVENT_CTRL[(event.find('control').text)]
     control_action = ""
     try :
-      control_action = ISY.IsyEventData.EVENT_CTRL_ACTION[control][event.find('action').text]
+      control_action = ISY.IsyEventData.EVENT_CTRL_ACTION[event.find('control').text][event.find('action').text]
     except:
       control_action = None
     nodeaddress = event.find('node').text
