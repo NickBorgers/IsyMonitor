@@ -11,6 +11,7 @@ sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
 import ISY
 import ISY.IsyEventData
 import EventDispositions
+import ProgramStatus
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
