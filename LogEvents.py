@@ -10,6 +10,7 @@ import sys
 sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
 import ISY
 import ISY.IsyEventData
+import EventDispositions
 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
@@ -21,42 +22,6 @@ myheaders = {'Authorization': 'Basic ' + credentials_configruation["HTTP_Basic"]
 
 ws = websocket.WebSocket()
 #ws.connect("ws://isy.nickborgers.com/rest/subscribe", header=myheaders)
-
-ignoredEventTypes = [
-  "Lux",
-  "Ultraviolet Light Index",
-  "Climate",
-  "Billing",
-  "Status",
-  "Something Sonos 1",
-  "Something Sonos 2",
-  "System Config Updated",
-  "Wind Direction",
-  "System Status",
-  "Fan Mode Overide",
-  "Nodes Updated",
-  "System Progress"
-]
-
-triggerTypeEvents = [
-  "Trigger",
-  "Device On",
-  "Device Off",
-  "Error"
-]
-statusTypeEvents = [
-  "Battery Level",
-  "Thermostat Reading",
-  "Humidity",
-  "Thermostat Mode",
-  "Nanoleaf Aurora Brightness",
-  "Nanoleaf Aurora Scene Number",
-  "Sonos Speaker Volume",
-  "User Number",
-  "Heat/Cool State",
-  "Fan State",
-  "Heat Setpoint"
-]
 
 def on_message(ws, message):
 #   print(message)
