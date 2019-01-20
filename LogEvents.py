@@ -50,8 +50,8 @@ def on_message(ws, message):
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     elif control not in EventDispositions.ignoredEventTypes :
+      nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
-        nodename = ObjectNameRetrieval.get_node_name(event, myisy)
         if "Duplicate" not in nodename:
           try :
             control = get_detailed_control(event)
@@ -64,7 +64,6 @@ def on_message(ws, message):
               print (control + " by: " + nodename)
       elif control in EventDispositions.statusTypeEvents :
         if nodeaddress is not None :
-          nodename = myisy._node_get_name(nodeaddress)[1]
           if "Duplicate" not in nodename:
             statusDetail = event.find("fmtAct").text
             print ("Status (" + control + ") of: " + nodename + " is: " + statusDetail)
@@ -74,7 +73,6 @@ def on_message(ws, message):
         print ("ISY is Alive")
       elif nodeaddress is not None :
         # Known node status
-        nodename = myisy._node_get_name(nodeaddress)[1]
         if nodename is not "Duplicate":
           print (control + " : " + nodeaddress + ": " + nodename)
           print (message)
@@ -82,9 +80,6 @@ def on_message(ws, message):
       elif event.find("eventInfo") is not None :
         if event.find("eventInfo").find("value") is None :
           try :
-            # Node event
-            nodeaddress = event.find("eventInfo").text[1:13].strip()
-            nodename = myisy._node_get_name(nodeaddress)[1]
             print (control + " : " + eventInfo + ": " + nodename)
             print ("")
           except:

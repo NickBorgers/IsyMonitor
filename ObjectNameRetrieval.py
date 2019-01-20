@@ -5,6 +5,11 @@ def get_program_name(event, myisy):
   return myisy.get_prog(paddedProgramId).name
   
 def get_node_name(event, myisy):
+  nodeaddress = event.find('node').text
   if nodeaddress is None:
     nodeaddress = event.find("eventInfo").text[1:13].strip()
   return myisy._node_get_name(nodeaddress)[1]
+  
+def get_detailed_control(event):
+  eventControlText = event.find("eventInfo").text[14:23].strip()
+  return ISY.IsyEventData.EVENT_CTRL[eventControlText]
