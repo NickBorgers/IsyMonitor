@@ -39,6 +39,7 @@ def on_message(ws, message):
     eventInfo = event.find("eventInfo").text
 
     if event.find("eventInfo").find("id") is not None:
+      # This is a program execution
       statusIndicator = event.find("eventInfo").find("s").text
 
       conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
@@ -49,6 +50,8 @@ def on_message(ws, message):
       else:
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
+    elif control is "Heartbeat" :
+      print ("ISY is Alive")
     elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
@@ -69,8 +72,6 @@ def on_message(ws, message):
             print ("Status (" + control + ") of: " + nodename + " is: " + statusDetail)
         else :
           print ("Got statusTypeEvent but no nodeaddress")
-      elif control is "Heartbeat" :
-        print ("ISY is Alive")
       elif nodeaddress is not None :
         # Known node status
         if nodename is not "Duplicate":
