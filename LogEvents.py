@@ -67,7 +67,7 @@ def on_message(ws, message):
           except:
             pass
           if control not in EventDispositions.ignoredEventTypes :
-            if control_action is not None:
+            if control_action is not None and control_action is not 'Info String':
               print (control + " by: " + nodename + " : " + control_action)
             else:
               print (control + " by: " + nodename)
