@@ -32,7 +32,7 @@ def on_message(ws, message):
     control = ISY.IsyEventData.EVENT_CTRL[(event.find('control').text)]
     control_action = ""
     try :
-      control_action = ISY.IsyEventData.EVENT_CTRL_ACTION[event.find('action').text]
+      control_action = ISY.IsyEventData.EVENT_CTRL_ACTION[control][event.find('action').text]
     except:
       control_action = None
     nodeaddress = event.find('node').text
@@ -52,6 +52,8 @@ def on_message(ws, message):
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     elif control is "Heartbeat" :
       print ("ISY is Alive")
+    elif control_action is "Var Stat" :
+      print ("Variable status: " + event.find("eventInfo").text)
     elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
