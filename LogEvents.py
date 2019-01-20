@@ -38,7 +38,11 @@ def on_message(ws, message):
     nodeaddress = event.find('node').text
     eventInfo = event.find("eventInfo").text
 
-    if event.find("eventInfo").find("id") is not None:
+    if control is "Heartbeat" :
+      print ("ISY is Alive")
+    elif control_action == "Var Stat" :
+      print ("Variable status: " + event.find("eventInfo").text)
+    elif event.find("eventInfo").find("id") is not None:
       # This is a program execution
       statusIndicator = event.find("eventInfo").find("s").text
 
@@ -50,11 +54,7 @@ def on_message(ws, message):
       else:
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
-    elif control is "Heartbeat" :
-      print ("ISY is Alive")
-    elif control_action is "Var Stat" :
-      print ("Variable status: " + event.find("eventInfo").text)
-    elif control not in EventDispositions.ignoredEventTypes :
+   elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
         if "Duplicate" not in nodename:
