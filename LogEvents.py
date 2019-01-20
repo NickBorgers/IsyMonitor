@@ -65,7 +65,7 @@ def on_message(ws, message):
         paddedProgramId = programId.rjust(4, '0')
         programName = myisy.get_prog(paddedProgramId).name
         print ("Program (" + programName + ") is (" + str(executionIndicator) + ") " + programStatus + " with condition " + conditionStatus)
-    elif control not in ignoredEventTypes :
+    elif control not in EventDispositions.ignoredEventTypes :
       if control in triggerTypeEvents :
         if nodeaddress is None:
           nodeaddress = event.find("eventInfo").text[1:13].strip()
@@ -77,12 +77,12 @@ def on_message(ws, message):
             control = eventControl
           except:
             pass
-          if control not in ignoredEventTypes :
+          if control not in EventDispositions.ignoredEventTypes :
             if control_action is not None:
               print (control + " by: " + nodename + " : " + control_action)
             else:
               print (control + " by: " + nodename)
-      elif control in statusTypeEvents :
+      elif control in EventDispositions.statusTypeEvents :
         if nodeaddress is not None :
           nodename = myisy._node_get_name(nodeaddress)[1]
           if "Duplicate" not in nodename:
