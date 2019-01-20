@@ -66,7 +66,7 @@ def on_message(ws, message):
         programName = myisy.get_prog(paddedProgramId).name
         print ("Program (" + programName + ") is (" + str(executionIndicator) + ") " + programStatus + " with condition " + conditionStatus)
     elif control not in EventDispositions.ignoredEventTypes :
-      if control in triggerTypeEvents :
+      if control in EventDispositions.triggerTypeEvents :
         if nodeaddress is None:
           nodeaddress = event.find("eventInfo").text[1:13].strip()
         nodename = myisy._node_get_name(nodeaddress)[1]
