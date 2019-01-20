@@ -42,7 +42,7 @@ def on_message(ws, message):
       print ("ISY is Alive")
     elif control_action == "Var Stat" :
       print ("Variable status: " + event.find("eventInfo").text)
-    elif event.find("eventInfo").find("id") is not None:
+    elif event.find("eventInfo").find("id") is not None :
       # This is a program execution
       statusIndicator = event.find("eventInfo").find("s").text
 
@@ -89,8 +89,8 @@ def on_message(ws, message):
             print (control + " : " + tostring(event))
         else :
           print (control + " : " + tostring(event))
-      else :
-        print (control + " : " + tostring(event))
+    else :
+      print (control + " : " + tostring(event))
   except Exception as e :
     print ("Unknown event type:" + tostring(event))
     print (e)
