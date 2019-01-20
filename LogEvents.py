@@ -42,14 +42,7 @@ def on_message(ws, message):
       conditionIndicator = int(statusIndicator[0])
       executionIndicator = int(statusIndicator[1])
 
-      if conditionIndicator is 1:
-        conditionStatus = 'unknown'
-      elif conditionIndicator is 2:
-        conditionStatus = 'true'
-      elif conditionIndicator is 3:
-        conditionStatus = 'false'
-      else :
-        conditionStatus = 'not_loaded'
+      conditionStatus = ProgramStatus.condition_status(conditionIndicator)
 
       if executionIndicator is 1:
         programStatus = 'IDLE'
