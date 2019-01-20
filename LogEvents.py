@@ -53,7 +53,7 @@ def on_message(ws, message):
         programName = ObjectNameRetrieval.get_program_name(event, myisy)
         print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     elif control_action == "Var Stat" :
-      print ("Variable status: " + event.find("eventInfo").text)
+      print ("Thing other developer things is a variable state change but doesn't appear to be: " + event.find("eventInfo").text)
     elif control not in EventDispositions.ignoredEventTypes :
       nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if control in EventDispositions.triggerTypeEvents :
