@@ -12,7 +12,7 @@ def handleProgramEvent(event, myisy):
     print ("Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus)
     
     
- def handleVariableChange(event, myisy):
+def handleVariableChange(event, myisy):
   variableName = ObjectNameRetrieval.get_variable_name(event, myisy)
       
   variableNewValue = event.find("eventInfo").find("var").find("val").text
