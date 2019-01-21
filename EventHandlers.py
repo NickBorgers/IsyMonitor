@@ -48,7 +48,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
     if control_action is not None:
       if control_action != 'Info String' :
         logObject = {
-          "type": "program",
+          "type": "trigger",
           "object_name": nodename,
           "new_status" : control,
           "status_detail": control_action
@@ -57,7 +57,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         print (control + " by: " + nodename + " : " + control_action)
     else:
       logObject = {
-        "type": "program",
+        "type": "trigger",
         "object_name": nodename,
         "new_status" : control,
       }
@@ -68,7 +68,7 @@ def handleStatusEvent(logger, event, control, nodename):
   if nodename is not None :
     statusDetail = event.find("fmtAct").text
     logObject = {
-      "type": "program",
+      "type": "status",
       "object_name": nodename,
       "new_status" : control,
       "status_detail": statusDetail
@@ -77,7 +77,7 @@ def handleStatusEvent(logger, event, control, nodename):
     print ("Status (" + control + ") of: " + nodename + " is: " + statusDetail)
   else :
     logObject = {
-      "type": "program",
+      "type": "status",
       "object_name": "unknown",
       "new_status" : control
     }
