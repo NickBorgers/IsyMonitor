@@ -14,7 +14,7 @@ import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
 import EventHandlers
-import Logger from Logger
+from Logger import Logger
 
 # Setup 
 credentials_configruation_raw = open("~/.isy_credentials").read()
@@ -25,7 +25,7 @@ myisy = ISY.Isy(addr="isy.nickborgers.com", userp=credentials_configruation["isy
 
 myheaders = {'Authorization': 'Basic ' + credentials_configruation["HTTP_Basic"], 'Sec-WebSocket-Protocol': 'ISYSUB'}
 
-logger = new Logger()
+logger = Logger()
 
 ws = websocket.WebSocket()
 # for debugging on console do:
