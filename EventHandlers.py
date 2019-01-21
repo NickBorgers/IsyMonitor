@@ -70,7 +70,7 @@ def handleStatusEvent(logger, event, control, nodename):
     logObject = {
       "type": "status",
       "object_name": nodename,
-      "new_status" : control,
+      "attribute" : control,
       "status_detail": statusDetail
     }
     logger.logThis(logObject)
