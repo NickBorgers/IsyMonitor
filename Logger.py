@@ -15,7 +15,7 @@ class Logger:
 
   def logThis(self, objectToLog):
     logMessageQueue.put(objectToLog)
-    if (logMessageQueue.size() > 3:
+    if logMessageQueue.size() > 3 :
       flushLogQueue()
     
   def flushLogQueue():
