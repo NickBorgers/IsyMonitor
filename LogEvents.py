@@ -60,23 +60,12 @@ def on_message(ws, message):
           EventHandlers.handleStatusEvent(event)
         elif nodename is not None :
           # This is some other event for a known node
-          if nodename is not "Duplicate":
-            print (control + " : " + nodeaddress + ": " + nodename)
-            print (message)
-            print ("")
-        elif event.find("eventInfo") is not None :
-          if event.find("eventInfo").find("value") is None :
-            try :
-              print (control + " : " + eventInfo + ": " + nodename)
-              print ("")
-            except:
-              print (control + " : " + tostring(event))
-          else :
-            print (control + " : " + tostring(event))
+          EventHandlers.handleOtherNodeEvent()
         else :
-          print (control + " : " + tostring(event))
+          print ("Unknown event with no parsing exception: " + control + ": " + message)
   except Exception as e :
-    print ("Unknown event type:" + tostring(event))
+    print ("")
+    print ("Unknown event type: " + message)
     print (e)
     print ("")
 
