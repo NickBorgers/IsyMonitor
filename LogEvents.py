@@ -14,7 +14,7 @@ import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
 import EventHandlers
-import Logger
+import Logger from Logger
 
 # Setup 
 credentials_configruation_raw = open("~/.isy_credentials").read()
