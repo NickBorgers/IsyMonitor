@@ -55,7 +55,7 @@ def on_message(ws, message):
       EventHandlers.handleVariableChange(logger, event, myisy)
     elif control not in EventDispositions.ignoredEventTypes :
       # Some other type of event has occured
-      nodename = ObjectNameRetrieval.get_node_name(logger, event, myisy)
+      nodename = ObjectNameRetrieval.get_node_name(event, myisy)
       if "Duplicate" not in nodename:
         # Some devices have extraneous nodes defined, but this event is not for a node marked as a duplicate
         if control in EventDispositions.triggerTypeEvents :
