@@ -1,7 +1,7 @@
 import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
-import Logger
+import Logger from Logger
 
 def handleProgramEvent(logger, event, myisy):
   statusIndicator = event.find("eventInfo").find("s").text
