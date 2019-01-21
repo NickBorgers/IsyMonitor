@@ -17,7 +17,7 @@ import EventHandlers
 from Logger import Logger
 
 # Setup 
-credentials_configruation_raw = open("~/.isy_credentials").read()
+credentials_configruation_raw = open(os.path.expanduser("~/.isy_credentials")).read()
 
 credentials_configruation = json.loads(credentials_configruation_raw)
 
