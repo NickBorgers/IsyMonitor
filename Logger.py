@@ -20,4 +20,4 @@ class Logger:
     
   def flushLogQueue(self):
     while self.logMessageQueue.qsize():
-      self.logFile.write(self.logMessageQueue.get() + "\n")
+      self.logFile.write(logMessageQueue.get() + "\n")
