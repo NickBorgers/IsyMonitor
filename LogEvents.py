@@ -25,7 +25,7 @@ myisy = ISY.Isy(addr="isy.nickborgers.com", userp=credentials_configruation["isy
 
 myheaders = {'Authorization': 'Basic ' + credentials_configruation["HTTP_Basic"], 'Sec-WebSocket-Protocol': 'ISYSUB'}
 
-logger = new Logger();
+logger = new Logger()
 
 ws = websocket.WebSocket()
 # for debugging on console do:
