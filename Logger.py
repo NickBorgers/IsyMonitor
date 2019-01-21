@@ -14,10 +14,10 @@ class Logger:
     print("Logger ready to log JSON objects to " + logging_configuration["dest_file"])
 
   def logThis(self, objectToLog):
-    self.logMessageQueue.put(json.dumps(objectToLog))
+    self.logMessageQueue.put(objectToLog)
     if self.logMessageQueue.qsize() > 3 :
       self.flushLogQueue()
     
   def flushLogQueue(self):
     while self.logMessageQueue.qsize():
-      self.logFile.write(logMessageQueue.get() + "\n")
+      self.logFile.write(json.dumps(objectToLog) + "\n")
