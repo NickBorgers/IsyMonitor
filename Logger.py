@@ -18,6 +18,6 @@ class Logger:
     if self.logMessageQueue.qsize() > 3 :
       self.flushLogQueue()
     
-  def flushLogQueue():
+  def flushLogQueue(self):
     while self.logMessageQueue.qsize():
       self.logFile.write(json.dumps(objectToLog) + "\n")
