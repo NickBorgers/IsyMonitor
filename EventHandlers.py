@@ -19,7 +19,7 @@ def handleVariableChange(event, myisy):
     
   print ("Variable (" + variableName + ") is now: " + variableNewValue)
   
-def handleTriggerEvent(event):
+def handleTriggerEvent(event, control, control_action, nodename):
   try :
     # attempt to get more deetailed control event description from within the event info
     control = ObjectNameRetrieval.get_detailed_control(event)
@@ -32,12 +32,12 @@ def handleTriggerEvent(event):
     else:
       print (control + " by: " + nodename)
         
-def handleStatusEvent(event):
+def handleStatusEvent(event, control, nodename):
   if nodename is not None :
     statusDetail = event.find("fmtAct").text
     print ("Status (" + control + ") of: " + nodename + " is: " + statusDetail)
   else :
     print ("Status (no nodename could be determined)")
     
-def handleOtherNodeEvent():
+def handleOtherNodeEvent(control, node_address, nodename):
   print ("Other event type for known node: " + control + " : " + nodeaddress + ": " + nodename)

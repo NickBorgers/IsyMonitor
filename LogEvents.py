@@ -54,13 +54,13 @@ def on_message(ws, message):
         # Some devices have extraneous nodes defined, but this event is not for a node marked as a duplicate
         if control in EventDispositions.triggerTypeEvents :
           # This is categorized as a trigger event
-          EventHandlers.handleTriggerEvent(event)
+          EventHandlers.handleTriggerEvent(event, control, control_action, nodename)
         elif control in EventDispositions.statusTypeEvents :
           # This is categorized as a status event
-          EventHandlers.handleStatusEvent(event)
+          EventHandlers.handleStatusEvent(event, control, nodename)
         elif nodename is not None :
           # This is some other event for a known node
-          EventHandlers.handleOtherNodeEvent()
+          EventHandlers.handleOtherNodeEvent(control, node_address, nodename)
         else :
           print ("Unknown event with no parsing exception: " + control + ": " + message)
   except Exception as e :
