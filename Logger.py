@@ -11,4 +11,4 @@ class Logger:
     print("Logger ready to log JSON objects to " + logging_configuration["dest_file"])
 
   def logThis(self, objectToLog):
-    self.logFile.write(json.dumps(objectToLog))
+    self.logFile.write(json.dumps(objectToLog) + "\n")
