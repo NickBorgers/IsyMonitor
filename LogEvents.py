@@ -15,6 +15,7 @@ import ProgramStatusAnalysis
 import ObjectNameRetrieval
 import EventHandlers
 
+# Setup 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
 
 credentials_configruation = json.loads(credentials_configruation_raw)
@@ -24,7 +25,8 @@ myisy = ISY.Isy(addr="isy.nickborgers.com", userp=credentials_configruation["isy
 myheaders = {'Authorization': 'Basic ' + credentials_configruation["HTTP_Basic"], 'Sec-WebSocket-Protocol': 'ISYSUB'}
 
 ws = websocket.WebSocket()
-#ws.connect("ws://isy.nickborgers.com/rest/subscribe", header=myheaders)
+# for debugging on console do:
+# ws.connect("ws://isy.nickborgers.com/rest/subscribe", header=myheaders)
 
 def on_message(ws, message):
 #   print(message)
@@ -79,16 +81,6 @@ def on_close(ws):
 def on_open(ws):
   thread.start_new_thread(run, ())
 
-def get_control_number_string(controlNumber):
-  switcher = {
-    "_0": "Hearbeat",
-    "_11": "Weather Report",
-    "_19": "ELK Event",
-    "_21": "Z-wave Event",
-    "_22": "Power usage report"
-  }
-  return switcher.get(controlNumber, controlNumber)
-
 #websocket.enableTrace(True)
 ws = websocket.WebSocketApp("ws://isy.nickborgers.com/rest/subscribe",
         header=myheaders,
@@ -97,4 +89,3 @@ ws = websocket.WebSocketApp("ws://isy.nickborgers.com/rest/subscribe",
         on_close = on_close)
 ws.on_open = on_open
 ws.run_forever()
-
