@@ -14,6 +14,7 @@ import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
 import EventHandlers
+import Logger
 
 # Setup 
 credentials_configruation_raw = open("/usr/share/isymonitor/.isy_credentials").read()
@@ -23,6 +24,8 @@ credentials_configruation = json.loads(credentials_configruation_raw)
 myisy = ISY.Isy(addr="isy.nickborgers.com", userp=credentials_configruation["isy_password"], userl=credentials_configruation["isy_id"])
 
 myheaders = {'Authorization': 'Basic ' + credentials_configruation["HTTP_Basic"], 'Sec-WebSocket-Protocol': 'ISYSUB'}
+
+logger = new Logger();
 
 ws = websocket.WebSocket()
 # for debugging on console do:
@@ -45,24 +48,24 @@ def on_message(ws, message):
       print ("ISY is Alive")
     elif event.find("eventInfo").find("id") is not None :
       # This is a program execution
-      EventHandlers.handleProgramEvent(event, myisy)
+      EventHandlers.handleProgramEvent(logger, event, myisy)
     elif event.find("eventInfo").find("var") is not None :
       # This is a variable state change
-      EventHandlers.handleVariableChange(event, myisy)
+      EventHandlers.handleVariableChange(logger, event, myisy)
     elif control not in EventDispositions.ignoredEventTypes :
       # Some other type of event has occured
-      nodename = ObjectNameRetrieval.get_node_name(event, myisy)
+      nodename = ObjectNameRetrieval.get_node_name(logger, event, myisy)
       if "Duplicate" not in nodename:
         # Some devices have extraneous nodes defined, but this event is not for a node marked as a duplicate
         if control in EventDispositions.triggerTypeEvents :
           # This is categorized as a trigger event
-          EventHandlers.handleTriggerEvent(event, control, control_action, nodename)
+          EventHandlers.handleTriggerEvent(logger, event, control, control_action, nodename)
         elif control in EventDispositions.statusTypeEvents :
           # This is categorized as a status event
-          EventHandlers.handleStatusEvent(event, control, nodename)
+          EventHandlers.handleStatusEvent(logger, event, control, nodename)
         elif nodename is not None :
           # This is some other event for a known node
-          EventHandlers.handleOtherNodeEvent(control, node_address, nodename)
+          EventHandlers.handleOtherNodeEvent(logger, control, node_address, nodename)
         else :
           print ("Unknown event with no parsing exception: " + control + ": " + message)
   except Exception as e :
