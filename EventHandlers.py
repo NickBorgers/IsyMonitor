@@ -63,13 +63,15 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         logger.logThis(logObject)
         print (message)
     else:
+      message = control + " by: " + nodename
       logObject = {
         "type": "trigger",
         "object_name": nodename,
         "new_status" : control,
+        "message": message
       }
       logger.logThis(logObject)
-      print (control + " by: " + nodename)
+      print (message)
         
 def handleStatusEvent(logger, event, control, nodename):
   if nodename is not None :
