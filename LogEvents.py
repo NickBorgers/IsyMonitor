@@ -42,7 +42,6 @@ def on_message(ws, message):
       control_action = ISY.IsyEventData.EVENT_CTRL_ACTION[event.find('control').text][event.find('action').text]
     except:
       control_action = None
-    nodeaddress = event.find('node').text
     eventInfo = event.find("eventInfo").text
 
     if control is "Heartbeat" :

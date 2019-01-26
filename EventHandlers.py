@@ -21,7 +21,8 @@ def handleProgramEvent(logger, event, myisy):
       "new_status" : programStatus,
       "condition": conditionStatus,
       "status_detail": statusIndicator,
-      "message": message
+      "message": message,
+      "node_address": getNodeAddress(event)
     }
     logger.logThis(logObject)
     print (message)
@@ -38,7 +39,8 @@ def handleVariableChange(logger, event, myisy):
     "type": "variable",
     "object_name": variableName,
     "new_status": variableNewValue,
-    "message": message
+    "message": message,
+    "node_address": getNodeAddress(event)
   }
   logger.logThis(logObject)
   print (message)
@@ -58,7 +60,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
           "object_name": nodename,
           "new_status" : control,
           "status_detail": control_action,
-          "message": message
+          "message": message,
+          "node_address": getNodeAddress(event)
         }
         logger.logThis(logObject)
         print (message)
@@ -68,7 +71,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         "type": "trigger",
         "object_name": nodename,
         "new_status" : control,
-        "message": message
+        "message": message,
+        "node_address": getNodeAddress(event)
       }
       logger.logThis(logObject)
       print (message)
@@ -82,7 +86,8 @@ def handleStatusEvent(logger, event, control, nodename):
       "object_name": nodename,
       "attribute" : control,
       "status_detail": statusDetail,
-      "message": message
+      "message": message,
+      "node_address": getNodeAddress(event)
     }
     logger.logThis(logObject)
     print (message)
@@ -92,7 +97,8 @@ def handleStatusEvent(logger, event, control, nodename):
       "type": "status",
       "object_name": "unknown",
       "new_status": control,
-      "message": message
+      "message": message,
+      "node_address": getNodeAddress(event)
     }
     logger.logThis(logObject)
     print (message)
@@ -103,7 +109,14 @@ def handleOtherNodeEvent(logger, control, node_address, nodename):
     "type": "other",
     "object_name": nodeaddress,
     "new_status": control,
-    "message": message
+    "message": message,
+    "node_address": nodeaddress
   }
   logger.logThis(logObject)
   print (message)
+  
+def getNodeAddress(event):
+  try:
+    return event.find('node').text
+  except:
+    return 'None'
