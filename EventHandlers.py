@@ -4,10 +4,13 @@ import ObjectNameRetrieval
 from Logger import Logger
 
 def handleProgramEvent(logger, event, myisy):
-  statusIndicator = event.find("eventInfo").find("s").text
-
-  conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
-  programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
+  try:
+    statusIndicator = event.find("eventInfo").find("s").text
+    conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
+    programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
+  except: 
+    conditionStatus = 'unknown'
+    programStatus = 'unknown'
 
   if conditionStatus is 'false' and programStatus is 'IDLE':
     #Ignore a program that's not running
