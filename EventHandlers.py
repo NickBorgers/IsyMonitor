@@ -104,13 +104,13 @@ def handleStatusEvent(logger, event, control, nodename):
     print (message)
     
 def handleOtherNodeEvent(logger, control, node_address, nodename):
-  message = "Other event type for known node: " + control + " : " + nodeaddress + ": " + nodename
+  message = "Other event type for known node: " + control + " : " + node_address + ": " + nodename
   logObject = {
     "type": "other",
-    "object_name": nodeaddress,
+    "object_name": node_address,
     "new_status": control,
     "message": message,
-    "node_address": nodeaddress
+    "node_address": node_address
   }
   logger.logThis(logObject)
   print (message)
