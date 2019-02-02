@@ -4,10 +4,13 @@ import ObjectNameRetrieval
 from Logger import Logger
 
 def handleProgramEvent(logger, event, myisy):
-  statusIndicator = event.find("eventInfo").find("s").text
-
-  conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
-  programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
+  try:
+    statusIndicator = event.find("eventInfo").find("s").text
+    conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
+    programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
+  except: 
+    conditionStatus = 'unknown'
+    programStatus = 'unknown'
 
   if conditionStatus is 'false' and programStatus is 'IDLE':
     #Ignore a program that's not running
@@ -22,7 +25,8 @@ def handleProgramEvent(logger, event, myisy):
       "condition": conditionStatus,
       "status_detail": statusIndicator,
       "message": message,
-      "node_address": getNodeAddress(event)
+      "node_address": getNodeAddress(event),
+      "object_folder_path": getPath(programName)
     }
     logger.logThis(logObject)
     print (message)
@@ -61,7 +65,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
           "new_status" : control,
           "status_detail": control_action,
           "message": message,
-          "node_address": getNodeAddress(event)
+          "node_address": getNodeAddress(event),
+          "object_folder_path": getPath(nodename)
         }
         logger.logThis(logObject)
         print (message)
@@ -72,7 +77,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         "object_name": nodename,
         "new_status" : control,
         "message": message,
-        "node_address": getNodeAddress(event)
+        "node_address": getNodeAddress(event),
+        "object_folder_path": getPath(nodename)
       }
       logger.logThis(logObject)
       print (message)
@@ -87,7 +93,8 @@ def handleStatusEvent(logger, event, control, nodename):
       "attribute" : control,
       "status_detail": statusDetail,
       "message": message,
-      "node_address": getNodeAddress(event)
+      "node_address": getNodeAddress(event),
+      "object_folder_path": getPath(nodename)
     }
     logger.logThis(logObject)
     print (message)
@@ -104,13 +111,14 @@ def handleStatusEvent(logger, event, control, nodename):
     print (message)
     
 def handleOtherNodeEvent(logger, control, node_address, nodename):
-  message = "Other event type for known node: " + control + " : " + nodeaddress + ": " + nodename
+  message = "Other event type for known node: " + control + " : " + node_address + ": " + nodename
   logObject = {
     "type": "other",
-    "object_name": nodeaddress,
+    "object_name": node_address,
     "new_status": control,
     "message": message,
-    "node_address": nodeaddress
+    "node_address": node_address,
+    "object_folder_path": getPath(nodename)
   }
   logger.logThis(logObject)
   print (message)
@@ -120,3 +128,12 @@ def getNodeAddress(event):
     return event.find('node').text
   except:
     return 'None'
+    
+def getPath(name):
+  pathFolders = name.split("/")[1:]
+  path = {}
+  folderNum=1
+  for thisPathFolder in pathFolders:
+    path["Folder" + str(folderNum)] = thisPathFolder
+    folderNum += 1
+  return path
