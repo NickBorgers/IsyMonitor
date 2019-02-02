@@ -25,7 +25,8 @@ def handleProgramEvent(logger, event, myisy):
       "condition": conditionStatus,
       "status_detail": statusIndicator,
       "message": message,
-      "node_address": getNodeAddress(event)
+      "node_address": getNodeAddress(event),
+      "node_path": getNodePath(nodename)
     }
     logger.logThis(logObject)
     print (message)
@@ -64,7 +65,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
           "new_status" : control,
           "status_detail": control_action,
           "message": message,
-          "node_address": getNodeAddress(event)
+          "node_address": getNodeAddress(event),
+          "node_path": getNodePath(nodename)
         }
         logger.logThis(logObject)
         print (message)
@@ -75,7 +77,8 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         "object_name": nodename,
         "new_status" : control,
         "message": message,
-        "node_address": getNodeAddress(event)
+        "node_address": getNodeAddress(event),
+        "node_path": getNodePath(nodename)
       }
       logger.logThis(logObject)
       print (message)
@@ -90,7 +93,8 @@ def handleStatusEvent(logger, event, control, nodename):
       "attribute" : control,
       "status_detail": statusDetail,
       "message": message,
-      "node_address": getNodeAddress(event)
+      "node_address": getNodeAddress(event),
+      "node_path": getNodePath(nodename)
     }
     logger.logThis(logObject)
     print (message)
@@ -113,7 +117,8 @@ def handleOtherNodeEvent(logger, control, node_address, nodename):
     "object_name": node_address,
     "new_status": control,
     "message": message,
-    "node_address": node_address
+    "node_address": node_address,
+    "node_path": getNodePath(nodename)
   }
   logger.logThis(logObject)
   print (message)
@@ -123,3 +128,6 @@ def getNodeAddress(event):
     return event.find('node').text
   except:
     return 'None'
+    
+def getNodePath(nodename):
+  return nodename.split("/")[1:]
