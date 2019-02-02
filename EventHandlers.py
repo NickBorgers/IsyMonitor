@@ -26,7 +26,7 @@ def handleProgramEvent(logger, event, myisy):
       "status_detail": statusIndicator,
       "message": message,
       "node_address": getNodeAddress(event),
-      "object_folder_path":: getPath(programName)
+      "object_folder_path": getPath(programName)
     }
     logger.logThis(logObject)
     print (message)
@@ -66,7 +66,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
           "status_detail": control_action,
           "message": message,
           "node_address": getNodeAddress(event),
-          "object_folder_path":: getPath(nodename)
+          "object_folder_path": getPath(nodename)
         }
         logger.logThis(logObject)
         print (message)
@@ -78,7 +78,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         "new_status" : control,
         "message": message,
         "node_address": getNodeAddress(event),
-        "object_folder_path":: getPath(nodename)
+        "object_folder_path": getPath(nodename)
       }
       logger.logThis(logObject)
       print (message)
@@ -94,7 +94,7 @@ def handleStatusEvent(logger, event, control, nodename):
       "status_detail": statusDetail,
       "message": message,
       "node_address": getNodeAddress(event),
-      "object_folder_path":: getPath(nodename)
+      "object_folder_path": getPath(nodename)
     }
     logger.logThis(logObject)
     print (message)
@@ -118,7 +118,7 @@ def handleOtherNodeEvent(logger, control, node_address, nodename):
     "new_status": control,
     "message": message,
     "node_address": node_address,
-    "object_folder_path":: getPath(nodename)
+    "object_folder_path": getPath(nodename)
   }
   logger.logThis(logObject)
   print (message)
