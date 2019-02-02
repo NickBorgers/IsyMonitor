@@ -135,5 +135,5 @@ def getNodePath(nodename):
   folderNum=1
   for thisPathFolder in nodePathFolders:
     nodePath["Folder" + str(folderNum)] = thisPathFolder
-    folderNum++
+    folderNum += 1
   return nodePathFolders
