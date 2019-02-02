@@ -26,7 +26,7 @@ def handleProgramEvent(logger, event, myisy):
       "status_detail": statusIndicator,
       "message": message,
       "node_address": getNodeAddress(event),
-      "node_path": getNodePath(nodename)
+      "path": getPath(programName)
     }
     logger.logThis(logObject)
     print (message)
@@ -66,7 +66,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
           "status_detail": control_action,
           "message": message,
           "node_address": getNodeAddress(event),
-          "node_path": getNodePath(nodename)
+          "path": getPath(nodename)
         }
         logger.logThis(logObject)
         print (message)
@@ -78,7 +78,7 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
         "new_status" : control,
         "message": message,
         "node_address": getNodeAddress(event),
-        "node_path": getNodePath(nodename)
+        "path": getPath(nodename)
       }
       logger.logThis(logObject)
       print (message)
@@ -94,7 +94,7 @@ def handleStatusEvent(logger, event, control, nodename):
       "status_detail": statusDetail,
       "message": message,
       "node_address": getNodeAddress(event),
-      "node_path": getNodePath(nodename)
+      "path": getPath(nodename)
     }
     logger.logThis(logObject)
     print (message)
@@ -118,7 +118,7 @@ def handleOtherNodeEvent(logger, control, node_address, nodename):
     "new_status": control,
     "message": message,
     "node_address": node_address,
-    "node_path": getNodePath(nodename)
+    "path": getPath(nodename)
   }
   logger.logThis(logObject)
   print (message)
@@ -129,11 +129,11 @@ def getNodeAddress(event):
   except:
     return 'None'
     
-def getNodePath(nodename):
-  nodePathFolders = nodename.split("/")[1:]
-  nodePath = {}
+def getPath(name):
+  pathFolders = name.split("/")[1:]
+  path = {}
   folderNum=1
-  for thisPathFolder in nodePathFolders:
-    nodePath["Folder" + str(folderNum)] = thisPathFolder
+  for thisPathFolder in pathFolders:
+    path["Folder" + str(folderNum)] = thisPathFolder
     folderNum += 1
-  return nodePath
+  return path
