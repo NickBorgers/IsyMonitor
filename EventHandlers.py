@@ -130,4 +130,10 @@ def getNodeAddress(event):
     return 'None'
     
 def getNodePath(nodename):
-  return nodename.split("/")[1:]
+  nodePathFolders = nodename.split("/")[1:]
+  nodePath = {}
+  folderNum=1
+  for thisPathFolder in nodePathFolders:
+    nodePath["Folder" + str(folderNum)] = thisPathFolder
+    folderNum++
+  return nodePathFolders
