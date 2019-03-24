@@ -87,17 +87,33 @@ def handleStatusEvent(logger, event, control, nodename):
   if nodename is not None :
     statusDetail = event.find("fmtAct").text
     message = "Status (" + control + ") of: " + nodename + " is: " + statusDetail
-    logObject = {
-      "type": "status",
-      "object_name": nodename,
-      "attribute" : control,
-      "status_detail": statusDetail,
-      "message": message,
-      "node_address": getNodeAddress(event),
-      "object_folder_path": getPath(nodename)
-    }
-    logger.logThis(logObject)
-    print (message)
+    # Handle special case of thermostat
+    if (control is "Thermostat Reading") :
+      logObject = {
+        "type": "status",
+        "object_name": nodename,
+        "attribute" : control,
+        "status_detail": statusDetail,
+        "message": message,
+        "node_address": getNodeAddress(event),
+        "object_folder_path": getPath(nodename),
+        # Strip units from temperature
+        "temperatureDegrees": statusDetail.split("°",1)[0]
+      }
+      logger.logThis(logObject)
+      print (message)
+    else :
+      logObject = {
+        "type": "status",
+        "object_name": nodename,
+        "attribute" : control,
+        "status_detail": statusDetail,
+        "message": message,
+        "node_address": getNodeAddress(event),
+        "object_folder_path": getPath(nodename)
+      }
+      logger.logThis(logObject)
+      print (message)
   else :
     message = "Status (no nodename could be determined)"
     logObject = {
