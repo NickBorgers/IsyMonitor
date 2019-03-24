@@ -31,6 +31,9 @@ logger = Logger()
 ws = websocket.WebSocket()
 # for debugging on console do:
 # ws.connect("ws://isy.nickborgers.com/rest/subscribe", header=myheaders)
+# message = ws.recv(); print message
+# event = fromstring(message)
+# control = ISY.IsyEventData.EVENT_CTRL[(event.find('control').text)]
 
 def on_message(ws, message):
 #   print(message)

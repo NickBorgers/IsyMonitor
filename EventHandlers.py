@@ -88,7 +88,7 @@ def handleStatusEvent(logger, event, control, nodename):
     statusDetail = event.find("fmtAct").text
     message = "Status (" + control + ") of: " + nodename + " is: " + statusDetail
     # Handle special case of thermostat
-    if (control is "Thermostat Reading") :
+    if (control == "Thermostat Reading") :
       logObject = {
         "type": "status",
         "object_name": nodename,
