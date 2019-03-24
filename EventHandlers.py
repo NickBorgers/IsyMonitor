@@ -98,7 +98,7 @@ def handleStatusEvent(logger, event, control, nodename):
         "node_address": getNodeAddress(event),
         "object_folder_path": getPath(nodename),
         # Strip units from temperature
-        "temperatureDegrees": statusDetail.split("°",1)[0]
+        "temperatureDegrees": float(statusDetail.split(u'\u00B0',1)[0])
       }
       logger.logThis(logObject)
       print (message)
