@@ -9,6 +9,7 @@ def handleProgramEvent(logger, event, myisy):
     conditionStatus = ProgramStatusAnalysis.condition_status(statusIndicator)
     programStatus = ProgramStatusAnalysis.program_status(statusIndicator)
   except: 
+    statusIndicator = 'unknown'
     conditionStatus = 'unknown'
     programStatus = 'unknown'
 
