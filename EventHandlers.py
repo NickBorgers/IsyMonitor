@@ -16,6 +16,9 @@ def handleProgramEvent(logger, event, myisy):
   if conditionStatus is 'false' and programStatus is 'IDLE':
     #Ignore a program that's not running
     pass
+  if conditionStatus is 'unknown' and programStatus is 'unknown':
+    #Ignore this report because I don't what it means and they are noisy in the logs
+    pass
   else:
     programName = ObjectNameRetrieval.get_program_name(event, myisy)
     message = "Program (" + programName + ") is (" + statusIndicator + ") " + programStatus + " with condition " + conditionStatus
