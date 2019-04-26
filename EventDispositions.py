@@ -31,5 +31,7 @@ statusTypeEvents = [
   "User Number",
   "Heat/Cool State",
   "Fan State",
-  "Heat Setpoint"
+  "Heat Setpoint",
+  "Cool Setpoint",
+  "Thermostat Reading"
 ]
