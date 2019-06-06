@@ -39,14 +39,15 @@ def handleProgramEvent(logger, event, myisy):
 def handleVariableChange(logger, event, myisy):
   variableName = ObjectNameRetrieval.get_variable_name(event, myisy)
       
-  variableNewValue = event.find("eventInfo").find("var").find("val").text
+  variableNewValueString = event.find("eventInfo").find("var").find("val").text
+  variableNewValue = int(variableNewValueString, 10)
   
-  message = "Variable (" + variableName + ") is now: " + variableNewValue
+  message = "Variable (" + variableName + ") is now: " + variableNewValueString
   
   logObject = {
     "type": "variable",
     "object_name": variableName,
-    "new_status": variableNewValue,
+    "new_value": variableNewValue,
     "message": message,
     "node_address": getNodeAddress(event)
   }
