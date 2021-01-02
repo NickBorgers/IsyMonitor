@@ -3,7 +3,7 @@ ignoredEventTypes = [
   "Ultraviolet Light Index",
   "Climate",
   "Billing",
-  "Status",
+#  "Status",
   "Something Sonos 1",
   "Something Sonos 2",
   "System Config Updated",
@@ -32,5 +32,6 @@ statusTypeEvents = [
   "Heat/Cool State",
   "Fan State",
   "Heat Setpoint",
-  "Cool Setpoint"
+  "Cool Setpoint",
+  "Status"
 ]

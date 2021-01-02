@@ -36,7 +36,7 @@ ws = websocket.WebSocket()
 # control = ISY.IsyEventData.EVENT_CTRL[(event.find('control').text)]
 
 def on_message(ws, message):
-#   print(message)
+#  print(message)
   event = fromstring(message)
   try :
     control = ISY.IsyEventData.EVENT_CTRL[(event.find('control').text)]

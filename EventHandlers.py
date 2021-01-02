@@ -1,6 +1,7 @@
 import EventDispositions
 import ProgramStatusAnalysis
 import ObjectNameRetrieval
+import UnitsOfMeasure
 from Logger import Logger
 
 def handleProgramEvent(logger, event, myisy):
@@ -91,9 +92,14 @@ def handleTriggerEvent(logger, event, control, control_action, nodename):
 def handleStatusEvent(logger, event, control, nodename):
   if nodename is not None :
     statusDetail = event.find("fmtAct").text
+    # Cleanse Status Detail of any degree character
+    statusDetail = statusDetail.split(u'\u00B0',1)[0]
     message = "Status (" + control + ") of: " + nodename + " is: " + statusDetail
-    # Handle special case of thermostat
-    if (control == "Thermostat Reading") :
+    # Interpret unit of measure
+    unitOfMeasureIndex = int(event.find("action").get("uom"))
+    unitOfMeasure = UnitsOfMeasure.unitsOfMeasure[unitOfMeasureIndex]
+    # Handle special case of temp reporting
+    if unitOfMeasure in UnitsOfMeasure.temperatureUnitsOfMeasure:
       logObject = {
         "type": "status",
         "object_name": nodename,
@@ -102,8 +108,10 @@ def handleStatusEvent(logger, event, control, nodename):
         "message": message,
         "node_address": getNodeAddress(event),
         "object_folder_path": getPath(nodename),
-        # Strip units from temperature
-        "temperatureDegrees": float(statusDetail.split(u'\u00B0',1)[0])
+        "temperature": {
+          "units": unitOfMeasure,
+          "degrees": float(statusDetail)
+        }
       }
       logger.logThis(logObject)
       print (message)
@@ -115,7 +123,8 @@ def handleStatusEvent(logger, event, control, nodename):
         "status_detail": statusDetail,
         "message": message,
         "node_address": getNodeAddress(event),
-        "object_folder_path": getPath(nodename)
+        "object_folder_path": getPath(nodename),
+        "unit_of_measure": unitOfMeasure
       }
       logger.logThis(logObject)
       print (message)
