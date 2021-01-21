@@ -98,25 +98,8 @@ def handleStatusEvent(logger, event, control, nodename):
     # Interpret unit of measure
     unitOfMeasureIndex = int(event.find("action").get("uom"))
     unitOfMeasure = UnitsOfMeasure.unitsOfMeasure[unitOfMeasureIndex]
-    # Handle special case of temp reporting
-    if unitOfMeasure in UnitsOfMeasure.temperatureUnitsOfMeasure:
-      logObject = {
-        "type": "status",
-        "object_name": nodename,
-        "attribute" : control,
-        "status_detail": statusDetail,
-        "message": message,
-        "node_address": getNodeAddress(event),
-        "object_folder_path": getPath(nodename),
-        "temperature": {
-          "units": unitOfMeasure,
-          "degrees": float(statusDetail)
-        }
-      }
-      logger.logThis(logObject)
-      print (message)
-    else :
-      logObject = {
+    # Do common object construction:
+    logObject = {
         "type": "status",
         "object_name": nodename,
         "attribute" : control,
@@ -125,10 +108,21 @@ def handleStatusEvent(logger, event, control, nodename):
         "node_address": getNodeAddress(event),
         "object_folder_path": getPath(nodename),
         "unit_of_measure": unitOfMeasure
+    }
+
+    # Handle special cases of temp reporting and humidity
+    if unitOfMeasure in UnitsOfMeasure.temperatureUnitsOfMeasure:
+      logObject["temperature"] = {
+        "units": unitOfMeasure,
+        "degrees": float(statusDetail)
       }
-      logger.logThis(logObject)
-      print (message)
-  else :
+
+    if "relative humidity" in unitOfMeasure:
+      logObject["relative_humidity"] = int(statusDetail.replace("%",""))
+
+    logger.logThis(logObject)
+    print (message)
+  else:
     message = "Status (no nodename could be determined)"
     logObject = {
       "type": "status",
