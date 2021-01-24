@@ -57,7 +57,7 @@ def handleVariableChange(logger, event, myisy):
   
 def handleTriggerEvent(logger, event, control, control_action, nodename):
   try :
-    # attempt to get more deetailed control event description from within the event info
+    # attempt to get more detailed control event description from within the event info
     control = ObjectNameRetrieval.get_detailed_control(event)
   except:
     pass
