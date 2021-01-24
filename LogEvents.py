@@ -10,8 +10,8 @@ import sys
 sys.path.insert(0, '/usr/share/isymonitor/ISYlib-python')
 import ISY
 import ISY.IsyEventData
-import EventDispositions
-import ProgramStatusAnalysis
+from isy_constants import EventDispositions
+from analysis import ProgramStatusAnalysis
 import ObjectNameRetrieval
 import EventHandlers
 from Logger import Logger
