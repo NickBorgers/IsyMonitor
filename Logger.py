@@ -6,7 +6,7 @@ class Logger:
     logging_configuration_raw = open("log.conf").read()
     logging_configuration = json.loads(logging_configuration_raw)
     
-    self.logFile = open(logging_configuration["dest_file"], "w", buffering=1)
+    self.logFile = open(logging_configuration["dest_file"], "a", buffering=1)
     
     print("Logger ready to log JSON objects to " + logging_configuration["dest_file"])
 

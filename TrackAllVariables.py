@@ -20,7 +20,11 @@ myisy = ISY.Isy(addr="isy.nickborgers.com", userp=credentials_configruation["isy
 
 logger = Logger()
 
-while True:
+def log_all_variables():
   for var in myisy.var_addrs():
     VariableLogger.logVariableValue(logger, myisy.var_addrs()[var]["name"], myisy)
+
+while True:
+  thread = threading.Thread(target=log_all_variables)
+  thread.start()
   time.sleep(60)
