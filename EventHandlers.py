@@ -44,13 +44,18 @@ def handleVariableChange(logger, event, myisy):
   variableNewValue = int(variableNewValueString, 10)
   
   message = "Variable (" + variableName + ") is now: " + variableNewValueString
+
+  variableNameComponents = variableName.split("_")
+  stateVariable = variableNameComponents[0] == "State"
   
   logObject = {
     "type": "variable",
     "object_name": variableName,
     "new_value": variableNewValue,
     "message": message,
-    "node_address": getNodeAddress(event)
+    "node_address": getNodeAddress(event),
+    "variable_name_pieces": variableNameComponents,
+    "state_variable": stateVariable
   }
   logger.logThis(logObject)
   print (message)
