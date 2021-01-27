@@ -17,7 +17,7 @@ def logVariableValue(logger, variableName, myisy):
   logObject = {
     "type": "variable",
     "object_name": variableName,
-    "new_value": variableValue,
+    "value": variableValue,
     "message": message,
     "variable_name_pieces": variableNameComponents,
     "state_variable": stateVariable

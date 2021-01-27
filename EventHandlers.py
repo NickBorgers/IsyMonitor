@@ -52,6 +52,7 @@ def handleVariableChange(logger, event, myisy):
     "type": "variable",
     "object_name": variableName,
     "new_value": variableNewValue,
+    "value": variableNewValue,
     "message": message,
     "node_address": getNodeAddress(event),
     "variable_name_pieces": variableNameComponents,
