@@ -23,6 +23,7 @@ logger = Logger()
 def log_all_variables():
   for var in myisy.var_addrs():
     VariableLogger.logVariableValue(logger, myisy.var_addrs()[var]["name"], myisy)
+  print("Logged variables")
 
 while True:
   thread = threading.Thread(target=log_all_variables)

@@ -23,5 +23,5 @@ def logVariableValue(logger, variableName, myisy):
     "state_variable": stateVariable
   }
   logger.logThis(logObject)
-  print (message)
+  #print (message)
 
